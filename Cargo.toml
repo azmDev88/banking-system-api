@@ -1,0 +1,18 @@
+[package]
+name = "finance_api_rust_v1"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = "0.8.8"
+tokio = { version = "1", features = ["full"] }
+sqlx = { version = "0.8.6", features = [ "runtime-tokio-rustls", "postgres", "uuid", "rust_decimal" ] }
+serde = { version = "1", features = ["derive"] }
+rust_decimal = "1.33"
+uuid = { version = "1", features = ["v4", "serde"] }
+thiserror = "2.0.17"
+anyhow = "1"
+async-trait = "0.1"
+dotenv = "0.15.0"
+tracing-subscriber = "0.3.22"
+rust_decimal_macros = "1.39.0"

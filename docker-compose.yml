@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # --- Definisi Service Database ---
+  postgres:
+    image: postgres:16-alpine
+    container_name: banking_db
+    restart: unless-stopped
+    ports:
+      - "5437:5432"
+    
+    # BAGIAN INI (Environment) HARUS DI SINI (Di bawah service postgres)
+    # BUKAN di bawah 'volumes' paling bawah.
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    
+    # Mapping volume ke service
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+    # Tuning performa & Timezone
+    command: postgres -c 'timezone=UTC' -c 'max_connections=200'
+    
+    # Healthcheck
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # --- Opsional: Adminer GUI ---
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+# --- Definisi Volume Storage ---
+# Ini blok terpisah di bagian paling bawah
+volumes:
+  postgres_data:
+    # Jangan taruh 'environment' di sini! Kosongkan saja atau biarkan default.

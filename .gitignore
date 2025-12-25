@@ -1,0 +1,58 @@
+# ----------------------------------------------------------------------
+# 1. Rust & Cargo Build Artifacts (WAJIB)
+# ----------------------------------------------------------------------
+# Folder build yang sangat besar (bisa bergiga-giga), tidak butuh di repo.
+/target/
+
+# Backup files yang kadang dibuat editor
+**/*.rs.bk
+
+# ----------------------------------------------------------------------
+# 2. Security & Environment Variables (CRITICAL)
+# ----------------------------------------------------------------------
+# File .env berisi password database & API Key.
+# Jika ini ter-upload ke GitHub, sistem Anda COMPROMISED.
+.env
+.env.local
+.env.backup
+.env.production
+.env.test
+
+# Private Keys (SSL/TLS/SSH) jika ada
+*.pem
+*.key
+*.p12
+
+# ----------------------------------------------------------------------
+# 3. Database & Docker Local Data
+# ----------------------------------------------------------------------
+# Mencegah database lokal (jika dimapping ke folder host) terupload.
+postgres_data/
+db_data/
+
+# Docker override files (biasanya untuk config lokal developer)
+docker-compose.override.yml
+
+# ----------------------------------------------------------------------
+# 4. IDE & OS Settings (Agar repo tetap bersih)
+# ----------------------------------------------------------------------
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VS Code (User settings lokal)
+.vscode/
+
+# IntelliJ / JetBrains
+.idea/
+*.iml
+
+# ----------------------------------------------------------------------
+# 5. SQLx Offline Data (OPSIONAL - BACA CATATAN DI BAWAH)
+# ----------------------------------------------------------------------
+# Jika Anda menggunakan mode offline SQLx, file ini SEHARUSNYA di-commit.
+# Tapi jika generate dinamis, bisa di-ignore sementara.
+# Untuk production grade, sebaiknya JANGAN di-ignore agar CI/CD bisa jalan.
+# .sqlx/
